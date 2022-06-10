@@ -39,7 +39,7 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
-const Main: React.FC = () => {
+const Main = () => {
   useDebugging()
   useEffect(() => {
     GoogleSignin.configure({
