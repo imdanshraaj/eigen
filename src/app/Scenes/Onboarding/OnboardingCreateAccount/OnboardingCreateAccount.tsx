@@ -41,7 +41,7 @@ export type OnboardingCreateAccountNavigationStack = {
 const StackNavigator = createStackNavigator<OnboardingCreateAccountNavigationStack>()
 
 // tslint:disable-next-line:variable-name
-export const __unsafe__createAccountNavigationRef: React.MutableRefObject<NavigationContainerRef | null> =
+export const __unsafe__createAccountNavigationRef: React.MutableRefObject<NavigationContainerRef<any> | null> =
   {
     current: null,
   }
@@ -159,10 +159,10 @@ export const OnboardingCreateAccountWithEmail: React.FC<OnboardingCreateAccountP
         <FormikProvider value={formik}>
           <NavigationContainer ref={__unsafe__createAccountNavigationRef} independent>
             <StackNavigator.Navigator
-              headerMode="screen"
               screenOptions={{
                 ...TransitionPresets.SlideFromRightIOS,
                 headerShown: false,
+                headerMode: "screen",
               }}
             >
               <StackNavigator.Screen

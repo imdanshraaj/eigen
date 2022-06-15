@@ -8,6 +8,7 @@ import { useEffect } from "react"
 import { Alert, Image, Platform } from "react-native"
 import { EnvelopeIcon } from "../../../palette/svgs/EnvelopeIcon"
 import { useFeatureFlag } from "../../store/GlobalStore"
+import { OnboardingNavigationStack } from "./Onboarding"
 import { AppleToken, GoogleOrFacebookToken } from "./OnboardingSocialLink"
 
 interface OnboardingSocialPickProps {
@@ -45,10 +46,13 @@ export const OnboardingSocialPick: React.FC<OnboardingSocialPickProps> = ({ mode
       idToken,
       appleUid,
     } = meta!
-    const navParams = {
+    const navParams: Omit<
+      OnboardingNavigationStack["OnboardingSocialLink"],
+      "tokenForProviderToBeLinked"
+    > = {
       email,
-      name,
-      providers,
+      name: name ?? "",
+      providers: providers ?? [],
       providerToBeLinked,
     }
     let tokenForProviderToBeLinked: GoogleOrFacebookToken | AppleToken
@@ -58,20 +62,14 @@ export const OnboardingSocialPick: React.FC<OnboardingSocialPickProps> = ({ mode
         return
       }
       tokenForProviderToBeLinked = oauthToken
-      navigation.navigate("OnboardingSocialLink", {
-        ...navParams,
-        tokenForProviderToBeLinked,
-      })
+      navigation.navigate("OnboardingSocialLink", { ...navParams, tokenForProviderToBeLinked })
     } else if (providerToBeLinked === "apple") {
       if (!idToken || !appleUid) {
         console.warn(`Error: idToken and appleUid must be provided for ${titleizedProvider}`)
         return
       }
       tokenForProviderToBeLinked = { idToken, appleUid }
-      navigation.navigate("OnboardingSocialLink", {
-        ...navParams,
-        tokenForProviderToBeLinked,
-      })
+      navigation.navigate("OnboardingSocialLink", { ...navParams, tokenForProviderToBeLinked })
     }
   }
 
