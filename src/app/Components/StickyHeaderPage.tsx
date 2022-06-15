@@ -103,6 +103,7 @@ export const StickyHeaderPage: React.FC<StickyHeaderPageProps> = (props) => {
         )}
       </Animated.ScrollView>
       <Animated.View
+        // @ts-expect-error
         style={{
           position: "absolute",
           transform: [{ translateY }],
