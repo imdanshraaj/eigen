@@ -205,7 +205,7 @@ const MyCollection: React.FC<{
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps="handled"
       >
-        <MyCollectionArtworks innerFlatlistRef={innerFlatListRef} me={me} relay={relay} />
+        <MyCollectionArtworks me={me} relay={relay} />
         {!!showDevAddButton && (
           <Button
             onPress={async () => {
