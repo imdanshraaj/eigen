@@ -8,6 +8,10 @@ import { ArtworkDetails } from "./ArtworkDetails"
 
 jest.unmock("react-relay")
 
+jest.mock("app/Scenes/Artwork/Components/ArtworkMediumModal", () => ({
+  ArtworkMediumModalFragmentContainer: () => null,
+}))
+
 describe("Artwork Details", () => {
   const mountArtworkDetails = (artwork: ArtworkDetails_artwork$data) =>
     mount(

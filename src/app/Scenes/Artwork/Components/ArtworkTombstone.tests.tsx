@@ -6,10 +6,22 @@ import { navigate } from "app/navigation/navigate"
 import { mount } from "enzyme"
 import { Theme } from "palette"
 import React from "react"
-import { TouchableWithoutFeedback } from "react-native"
+import { Text, TouchableWithoutFeedback } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { ArtworkTombstone } from "./ArtworkTombstone"
 import { CertificateAuthenticityModal } from "./CertificateAuthenticityModal"
+
+const ArtworkAttributionClassFAQModal: React.FC<{ visible: boolean }> = ({ visible }) => {
+  if (!visible) {
+    return null
+  }
+
+  return <Text>Artwork classifications</Text>
+}
+
+jest.mock("app/Scenes/Artwork/Components/ArtworkAttributionClassFAQModal", () => ({
+  ArtworkAttributionClassFAQModal,
+}))
 
 describe("ArtworkTombstone", () => {
   it("renders fields correctly", () => {
@@ -57,7 +69,7 @@ describe("ArtworkTombstone", () => {
     expect(navigate).toHaveBeenCalledWith("/artist/andy-warhol")
   })
 
-  it("redirects to attribution class faq page when attribution class is clicked", () => {
+  it("shows the attribution class modal when limited edition set text is tapped", () => {
     const component = mount(
       <SafeAreaProvider>
         <Theme>
@@ -67,8 +79,11 @@ describe("ArtworkTombstone", () => {
     )
     const attributionClass = component.find(TouchableWithoutFeedback).at(4)
     expect(attributionClass.text()).toContain("a limited edition set")
+
+    expect(component.find(ArtworkAttributionClassFAQModal).props().visible).toBeFalse()
     attributionClass.props().onPress()
-    expect(navigate).toHaveBeenCalledWith("/artwork-classifications")
+    component.update()
+    expect(component.find(ArtworkAttributionClassFAQModal).props().visible).toBeTrue()
   })
 
   it("shows the authenticity modal when Certificate of Authenticity is tapped", () => {
